@@ -1,0 +1,53 @@
+actions = {
+    # triggered updates (adding a new source list)
+    'update_apt_cache': {
+        'cascade_skip': False,
+        'command': "apt update",
+        'triggered': True,
+        'unless': "find /var/cache/apt/pkgcache.bin -mmin -60",
+    },
+    # automatic updating (new nodes / older nodes with no updates)
+    'auto_update_apt_cache': {
+        'command': "apt update",
+        'needed_by': ["pkg_apt:"],
+        'unless': "find /var/cache/apt/pkgcache.bin -mmin -60|grep /var/cache/apt/pkgcache.bin",
+    },
+}
+
+files = {
+}
+
+release_names = {
+    'debian': {
+        8: 'jessie',
+        9: 'stretch',
+    }
+}
+
+release_name = release_names.get(node.os, {}).get(node.os_version[0], 'jessie')
+
+directories = {
+    "/etc/apt/sources.list.d": {
+        "mode": "0755",
+        "owner": "root",
+        "group": "root",
+    },
+}
+
+pkg_apt = {
+    'file': {},
+    'apt-transport-https': {},
+}
+
+files["/etc/apt/sources.list"] = {
+    "source": "sources.list",
+    "content_type": "jinja2",
+    "mode": "0755",
+    "owner": "root",
+    "group": "root",
+    'context': {
+        'release_name': release_name,
+        'apt_mirror': node.metadata.get('apt', {}).get('mirror', 'http://ftp.halifax.rwth-aachen.de/debian/')
+    },
+    'triggers': ["action:update_apt_cache"],
+}
