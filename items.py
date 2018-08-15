@@ -39,6 +39,11 @@ pkg_apt = {
     'apt-transport-https': {},
 }
 
+for pkg, config in node.metadata.get('apt', {}).get('packages', []).items():
+    if pkg not in pkg_apt.keys():
+        # TODO: add dependency for update apt_cache
+        pkg_apt[pkg] = config
+
 files["/etc/apt/sources.list"] = {
     "source": "sources.list",
     "content_type": "jinja2",
