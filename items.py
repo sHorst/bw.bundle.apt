@@ -2,13 +2,13 @@ actions = {
     # triggered updates (adding a new source list)
     'update_apt_cache': {
         'cascade_skip': False,
-        'command': "apt update",
+        'command': "apt-get update",
         'triggered': True,
         'unless': "find /var/cache/apt/pkgcache.bin -mmin -60",
     },
     # automatic updating (new nodes / older nodes with no updates)
     'auto_update_apt_cache': {
-        'command': "apt update",
+        'command': "apt-get update",
         'needed_by': ["pkg_apt:"],
         'unless': "find /var/cache/apt/pkgcache.bin -mmin -60|grep /var/cache/apt/pkgcache.bin",
     },
