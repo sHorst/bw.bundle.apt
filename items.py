@@ -10,7 +10,7 @@ actions = {
     'auto_update_apt_cache': {
         'command': "apt-get update",
         'needed_by': ["pkg_apt:"],
-        'unless': "find /var/cache/apt/pkgcache.bin -mmin -60|grep -q /var/cache/apt/pkgcache.bin",
+        'unless': "find /var/cache/apt/pkgcache.bin -mmin -60|grep /var/cache/apt/pkgcache.bin &> /dev/null",
     },
 }
 
