@@ -21,6 +21,9 @@ release_names = {
     'debian': {
         8: 'jessie',
         9: 'stretch',
+        10: 'buster',
+        11: 'bullseye',
+        12: 'bookworm',
     }
 }
 
