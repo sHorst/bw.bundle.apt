@@ -6,6 +6,11 @@ actions = {
         'triggered': True,
         'unless': "find /var/cache/apt/pkgcache.bin -mmin -60",
     },
+    'force_update_apt_cache': {
+        'cascade_skip': False,
+        'command': "apt-get update",
+        'triggered': True,
+    },
     # automatic updating (new nodes / older nodes with no updates)
     'auto_update_apt_cache': {
         'command': "apt-get update",
@@ -57,5 +62,5 @@ files["/etc/apt/sources.list"] = {
         'release_name': release_name,
         'apt_mirror': node.metadata.get('apt', {}).get('mirror', 'http://ftp.halifax.rwth-aachen.de/debian/')
     },
-    'triggers': ["action:update_apt_cache"],
+    'triggers': ["action:force_update_apt_cache"],
 }
