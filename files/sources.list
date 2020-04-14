@@ -7,3 +7,6 @@ deb-src http://security.debian.org/debian-security {{ release_name }}/updates ma
 # {{ release_name }}-updates, previously known as 'volatile'
 deb {{ apt_mirror }} {{ release_name }}-updates main
 deb-src {{ apt_mirror }} {{ release_name }}-updates main
+{% if node.metadata.get('apt', {}).get('backports', False): %}
+deb {{ apt_mirror }} {{ release_name }}-backports main
+{% endif %}
