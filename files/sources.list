@@ -1,12 +1,16 @@
 deb {{ apt_mirror }} {{ release_name }} main contrib non-free
 deb-src {{ apt_mirror }} {{release_name}} main contrib non-free
 
+{% if node.metadata.get('apt', {}).get('security', True): %}
 deb http://security.debian.org/debian-security {{ release_name }}/updates main
 deb-src http://security.debian.org/debian-security {{ release_name }}/updates main
+{% endif %}
 
+{% if node.metadata.get('apt', {}).get('updates', True): %}
 # {{ release_name }}-updates, previously known as 'volatile'
 deb {{ apt_mirror }} {{ release_name }}-updates main
 deb-src {{ apt_mirror }} {{ release_name }}-updates main
+{% endif %}
 {% if node.metadata.get('apt', {}).get('backports', False): %}
 deb {{ apt_mirror }} {{ release_name }}-backports main
 {% endif %}
