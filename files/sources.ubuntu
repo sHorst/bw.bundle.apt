@@ -1,0 +1,17 @@
+deb {{ apt_mirror }} {{ release_name }} main restricted universe multiverse
+#deb-src {{ apt_mirror }} {{ release_name }} main restricted universe multiverse
+
+{% if node.metadata.get('apt', {}).get('updates', True): %}
+deb {{ apt_mirror }} {{ release_name }}-updates main restricted universe multiverse
+#deb-src {{ apt_mirror }} {{ release_name }}-updates main restricted universe multiverse
+{% endif %}
+
+{% if node.metadata.get('apt', {}).get('security', True): %}
+deb {{ apt_mirror }} {{ release_name }}-security main restricted universe multiverse
+#deb-src {{ apt_mirror }} {{ release_name }}-security main restricted universe multiverse
+{% endif %}
+
+{% if node.metadata.get('apt', {}).get('backports', False): %}
+deb {{ apt_mirror }} {{ release_name }}-backports main restricted universe multiverse
+#deb-src {{ apt_mirror }} {{ release_name }}-backports main restricted universe multiverse
+{% endif %}

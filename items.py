@@ -29,6 +29,11 @@ release_names = {
         10: 'buster',
         11: 'bullseye',
         12: 'bookworm',
+    },
+    'ubuntu': {
+        20: 'focal',
+        18: 'bionic',
+        16: 'xenial',
     }
 }
 
@@ -53,14 +58,14 @@ for pkg, config in node.metadata.get('apt', {}).get('packages', {}).items():
         pkg_apt[pkg] = config
 
 files["/etc/apt/sources.list"] = {
-    "source": "sources.list",
+    "source": "sources.debian" if node.os == "debian" else "sources.ubuntu",
     "content_type": "jinja2",
     "mode": "0755",
     "owner": "root",
     "group": "root",
     'context': {
         'release_name': release_name,
-        'apt_mirror': node.metadata.get('apt', {}).get('mirror', 'http://ftp.halifax.rwth-aachen.de/debian/')
+        'apt_mirror': node.metadata.get('apt', {}).get('mirror', 'http://ftp.halifax.rwth-aachen.de/{os}/'.format(os=node.os))
     },
     'triggers': ["action:force_update_apt_cache"],
 }
