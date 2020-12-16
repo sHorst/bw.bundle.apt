@@ -58,7 +58,7 @@ for pkg, config in node.metadata.get('apt', {}).get('packages', {}).items():
         pkg_apt[pkg] = config
 
 files["/etc/apt/sources.list"] = {
-    "source": "sources.list" if node.os == "debian" else "sources_ubuntu.list",
+    "source": "sources.debian" if node.os == "debian" else "sources.ubuntu",
     "content_type": "jinja2",
     "mode": "0755",
     "owner": "root",
