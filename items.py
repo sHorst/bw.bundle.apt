@@ -22,22 +22,8 @@ actions = {
 files = {
 }
 
-release_names = {
-    'debian': {
-        8: 'jessie',
-        9: 'stretch',
-        10: 'buster',
-        11: 'bullseye',
-        12: 'bookworm',
-    },
-    'ubuntu': {
-        20: 'focal',
-        18: 'bionic',
-        16: 'xenial',
-    }
-}
-
-release_name = release_names.get(node.os, {}).get(node.os_version[0], 'jessie')
+# move release name to debian/ ubuntu bundle
+release_name = node.metadata.get(node.os, {}).get('release_name', 'jessie')
 
 directories = {
     "/etc/apt/sources.list.d": {
