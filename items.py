@@ -52,7 +52,8 @@ files["/etc/apt/sources.list"] = {
     "group": "root",
     'context': {
         'release_name': release_name,
-        'apt_mirror': node.metadata.get('apt', {}).get('mirror', 'http://ftp.halifax.rwth-aachen.de/{os}/'.format(os=node.os))
+        'apt_mirror': node.metadata.get('apt', {}).
+            get('mirror', 'http://ftp.halifax.rwth-aachen.de/{os}'.format(os=node.os).rstrip('/'))
     },
     'triggers': ["action:force_update_apt_cache"],
 }
