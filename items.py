@@ -31,6 +31,11 @@ directories = {
         "owner": "root",
         "group": "root",
     },
+    "/etc/apt/keyrings": {
+        "mode": "0755",
+        "owner": "root",
+        "group": "root",
+    }
 }
 
 pkg_apt = {
