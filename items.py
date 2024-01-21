@@ -41,6 +41,7 @@ directories = {
 pkg_apt = {
     'file': {},
     'apt-transport-https': {},
+    'ca-certificates': {},
 }
 
 for pkg, config in node.metadata.get('apt', {}).get('packages', {}).items():
@@ -58,7 +59,11 @@ files["/etc/apt/sources.list"] = {
     'context': {
         'release_name': release_name,
         'apt_mirror': node.metadata.get('apt', {}).
-            get('mirror', 'http://ftp.halifax.rwth-aachen.de/{os}'.format(os=node.os).rstrip('/'))
+            get('mirror', 'https://ftp.halifax.rwth-aachen.de/{os}'.format(os=node.os).rstrip('/'))
     },
     'triggers': ["action:force_update_apt_cache"],
+    'needs': [
+        'pkg_apt:apt-transport-https',
+        'pkg_apt:ca-certificates',
+    ],
 }
