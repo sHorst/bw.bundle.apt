@@ -1,5 +1,5 @@
-deb {{ apt_mirror }} {{ release_name }} main contrib non-free
-deb-src {{ apt_mirror }} {{release_name}} main contrib non-free
+deb {{ apt_mirror }} {{ release_name }} main contrib non-free non-free-firmware
+deb-src {{ apt_mirror }} {{release_name}} main contrib non-free non-free-firmware
 
 {% if node.metadata.get('apt', {}).get('security', True): %}
 {% if node.os_version[0] < 11: %}
